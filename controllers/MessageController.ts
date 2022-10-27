@@ -10,7 +10,7 @@ import MessageI from "../models/messages/MessageI";
  * resource.
  * Defines the following HTTP endpoints:
  * <ul>
- *     <li>POST /api/users/:uid/messages to send a message</li>
+ *     <li>POST /api/users/:uid/messages/:anotherUid to send a message</li>
  *     <li>GET /api/users/:uid/messagesSent to retrieve all the messages sent by a user</li>
  *     <li>GET /api/users/:uid/messagesReceived to retrieve all the messages sent to the user</li>
  *     <li>DELETE /api/users/:uid/messages/:mid to remove a particular message instance</li>
@@ -31,7 +31,7 @@ export default class MessageController implements MessageControllerI {
     public static getInstance = (app: Express): MessageController => {
         if (MessageController.messageController === null) {
             MessageController.messageController = new MessageController();
-            app.post("/api/users/:uid/messages", MessageController.messageController.userSendsMessage);
+            app.post("/api/users/:uid/messages/:anotherUid", MessageController.messageController.userSendsMessage);
             app.get("/api/users/:uid/messagesSent", MessageController.messageController.findAllMessagesSentByUser);
             app.get("/api/users/:uid/messagesReceived", MessageController.messageController.findAllMessagesSentToUser);
             app.delete("/api/users/:uid/messages/:mid", MessageController.messageController.deleteMessageSentToUser);
@@ -49,7 +49,7 @@ export default class MessageController implements MessageControllerI {
      */
     deleteMessageSentToUser = (req: Request, res:Response) =>
         MessageController.messageDao.deleteMessageSentToUser(req.params.uid, req.params.mid)
-            .then(messages => res.json(messages));
+            .then(status => res.send(status));
     /**
      * Retrieves all messages sent by a user from the database and returns the messages
      * @param req {Request} Represents request from client
@@ -81,7 +81,7 @@ export default class MessageController implements MessageControllerI {
      * database
      */
     userSendsMessage = (req: Request, res:Response) =>
-        MessageController.messageDao.userSendsAMessageToAnotherUser(req.params.body, req.body)
+        MessageController.messageDao.userSendsAMessageToAnotherUser(req.params.uid, req.params.anotherUid, req.body)
             .then((message: MessageI) => res.json(message));
 
 }

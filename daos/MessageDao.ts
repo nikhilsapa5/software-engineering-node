@@ -37,10 +37,11 @@ export default class MessageDao implements MessageDaoI {
         await MessageModel
             .deleteOne(
                 {
-                    to: uid,
                     _id: mid
                 }
-            );
+            )
+            .then(messages => messages)
+            .catch(error => error);
 
     /**
      * Uses Message Model to view all the messages sent by a user.
@@ -51,7 +52,9 @@ export default class MessageDao implements MessageDaoI {
         await MessageModel
             .find({from: uid})
             .populate("message")
-            .exec();
+            .exec()
+            .then(messages => messages)
+            .catch(error => error);
 
     /**
      * Uses Message model to view all the messages sent to a user.
@@ -60,21 +63,27 @@ export default class MessageDao implements MessageDaoI {
      */
     findAllMessagesSentToUser = async (uid: string): Promise<MessageI[]> =>
         await MessageModel
-            .find({from: uid})
+            .find({to: uid})
             .populate("message")
-            .exec();
+            .exec()
+            .then(messages => messages)
+            .catch(error => error);
 
     /**
      * Uses message model to send a message from one user to another.
      * @param uid the user id of the user
+     * @param anotherUid the user id of the user who receives the message
      * @param message the message that needs to be sent
      * @returns Promise to be notified with the message that was sent
      */
-    userSendsAMessageToAnotherUser = async (uid: string, message: Message): Promise<any> =>
+    userSendsAMessageToAnotherUser = async (uid: string, anotherUid: string, message: Message): Promise<any> =>
         await MessageModel
             .create({
                 ...message,
-                from: uid
-            });
+                from: uid,
+                to: anotherUid
+            })
+            .then(messages => messages)
+            .catch(error => error);
 
 }

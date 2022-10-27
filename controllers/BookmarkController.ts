@@ -1,24 +1,14 @@
 /**
- * @file Controller RESTful Web service API for bookmarks resource
+ * @file RESTful Web service API Controller for bookmarks
  */
 import {Express, Request, Response} from "express";
 import BookmarkDao from "../daos/BookmarkDao";
 import BookmarkControllerI from "../interfaces/BookmarkController"
 
 /**
- * @class BookmarkController Implements RESTful Web service API for bookmarks resource.
- * Defines the following HTTP endpoints:
- * <ul>
- *     <li>GET /api/users/:uid/bookmarks to retrieve all the tuits bookmarked by a user
- *     </li>
- *     <li>POST /api/users/:uid/bookmarks/:tid to record that a user bookmarks a tuit
- *     </li>
- *     <li>DELETE /api/users/:uid/unbookmarks/:tid to record that a user
- *     no londer bookmarks a tuit</li>
- * </ul>
- * @property {BookmarkDao} bookmarkDao Singleton DAO implementing likes CRUD operations
- * @property {BookmarkController} BookmarkController Singleton controller implementing
- * RESTful Web service API
+ * @class BookmarkController Implements RESTful Web service API for bookmarks
+ * @property {BookmarkDao} bookmarkDao Singleton DAO implementation for CRUD operations
+ * @property {BookmarkController} BookmarkController Singleton controller
  */
 export default class BookmarkController implements BookmarkControllerI {
     private static bookmarkDao: BookmarkDao = BookmarkDao.getInstance();
@@ -26,7 +16,6 @@ export default class BookmarkController implements BookmarkControllerI {
     /**
      * Creates singleton controller instance
      * @param {Express} app Express instance to declare the RESTful Web service
-     * API
      * @return TuitController
      */
     public static getInstance = (app: Express): BookmarkController => {
@@ -36,7 +25,6 @@ export default class BookmarkController implements BookmarkControllerI {
             app.post("/api/users/:uid/bookmarks/:tid", BookmarkController.bookmarkController.userBookmarksTuit);
             app.delete("/api/users/:uid/bookmarks/:tid", BookmarkController.bookmarkController.userUnbookmarksTuit);
         }
-
         return BookmarkController.bookmarkController;
     }
 

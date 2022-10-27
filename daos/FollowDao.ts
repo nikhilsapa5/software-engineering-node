@@ -36,19 +36,21 @@ export default class FollowDao implements FollowDaoI {
         FollowModel.create({
             userFollowed:  anotherUid,
             userFollowing: uid
-        });
+        })
+            .then(follows => follows)
+            .catch(error => error);
 
     /**
      * Uses Follow model to delete a follow relationship between two users.
-     * @param uid the id of the user.
-     * @param anotherUid the id of the user who is being followed
      * @returns Promise to be notified when the relationship is deleted.
+     * @param fid the unique id of the follow instance that needs to be deleted
      */
-    userUnFollowsAnotherUser = async (uid: string, anotherUid: string): Promise<any> =>
+    userUnFollowsAnotherUser = async (fid: string): Promise<any> =>
         FollowModel.deleteOne({
-            userFollowed:  anotherUid,
-            userFollowing: uid
-        });
+            _id:  fid
+        })
+            .then(follows => follows)
+            .catch(error => error);
 
     /**
      * Uses Follow model to view a user's followers.
@@ -57,7 +59,9 @@ export default class FollowDao implements FollowDaoI {
     userViewsTheirFollowers = async (uid: string): Promise<FollowI[]> =>
         FollowModel.find({userFollowed: uid})
             .populate("userFollowing")
-            .exec();
+            .exec()
+            .then(follows => follows)
+            .catch(error => error);
 
     /**
      * Uses Follow model to view a list of other users that this user is following
@@ -66,5 +70,8 @@ export default class FollowDao implements FollowDaoI {
     userViewsTheirFollowing = async (uid: string): Promise<FollowI[]> =>
         FollowModel.find({userFollowing: uid})
             .populate("userFollowed")
-            .exec();
+            .exec()
+            .then(follows => follows)
+            .catch(error => error);
+
 }

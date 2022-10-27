@@ -9,12 +9,6 @@ import {Express, Request, Response} from "express";
  * @class FollowController Implements RESTful Web service API for follows
  * resource.
  * Defines the following HTTP endpoints:
- * <ul>
- *     <li>POST /api/users/:uid/follow/:anotherUid to create a follow relationship</li>
- *     <li>GET /api/users/:uid/followers to retrieve all the followers of the user</li>
- *     <li>GET /api/users/:uid/following to retrieve all the other users whom the user is following</li>
- *     <li>DELETE /api/users/:uid/follow/:anotherUid to remove a particular follow instance</li>
- * </ul>
  * @property {FollowDao} followDao Singleton DAO implementing message CRUD operations
  * @property {FollowController} followController Singleton controller implementing
  * RESTful Web service API
@@ -34,7 +28,7 @@ export default class FollowController implements FollowControllerI {
             app.get("/api/users/:uid/followers", FollowController.followController.userViewsTheirFollowers);
             app.get("/api/users/:uid/following", FollowController.followController.userViewsTheirFollowing);
             app.post("/api/users/:uid/follow/:anotherUid", FollowController.followController.userFollowsAnotherUser);
-            app.delete("/api/users/:uid/follow/:anotherUid", FollowController.followController.userUnFollowsAnotherUser)
+            app.delete("/api/follow/:fid", FollowController.followController.userUnFollowsAnotherUser)
         }
 
         return FollowController.followController;
@@ -64,7 +58,7 @@ export default class FollowController implements FollowControllerI {
      * database
      */
     userUnFollowsAnotherUser = (req: Request, res: Response) =>
-        FollowController.followDao.userUnFollowsAnotherUser(req.params.uid, req.params.anotherUid)
+        FollowController.followDao.userUnFollowsAnotherUser(req.params.fid)
             .then(follows => res.json(follows));
 
     /**
