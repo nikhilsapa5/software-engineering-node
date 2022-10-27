@@ -43,9 +43,6 @@ app.use(express.json());
 app.get('/', (req: Request, res: Response) =>
     res.send('Welcome to Foundation of Software Engineering!!!!'));
 
-app.get('/add/:a/:b', (req: Request, res: Response) =>
-    res.send(req.params.a + req.params.b));
-
 const userController = UserController.getInstance(app);
 const tuitController = TuitController.getInstance(app);
 const likesController = LikeController.getInstance(app);
