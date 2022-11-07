@@ -13,9 +13,7 @@
  * Connects to a remote MongoDB instance hosted on the Atlas cloud database
  * service
  */
-import UserDao from "./daos/UserDao";
 import UserController from "./controllers/UserController";
-import TuitDao from "./daos/TuitDao";
 import TuitController from "./controllers/TuitController";
 import express, {Request, Response} from 'express';
 import mongoose = require("mongoose");
@@ -36,10 +34,7 @@ const options = {
     socketTimeoutMS: 45000,
     family: 4
 }
-mongoose.connect('mongodb+srv://nikhilsapa:Computer123@cluster0.0mrzpxc.mongodb.net/tuiter?retryWrites=true&w=majority');
-app.use(cors());
-app.use(express.json());
-
+mongoose.connect('mongodb+srv://nikhilsapa:Computer123@cluster0.0mrzpxc.mongodb.net/tuiter?retryWrites=true&w=majority', options);
 app.get('/', (req: Request, res: Response) =>
     res.send('Welcome to Foundation of Software Engineering!!!!'));
 
