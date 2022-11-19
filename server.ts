@@ -73,7 +73,7 @@ const options = {
     socketTimeoutMS: 45000,
     family: 4
 }
-mongoose.connect('mongodb+srv://nikhilsapa:Computer123@cluster0.0mrzpxc.mongodb.net/tuiter?retryWrites=true&w=majority');
+mongoose.connect('mongodb+srv://NehaRamachandra:1234@cluster0.zmme2.mongodb.net/tuiter?retryWrites=true&w=majority');
 app.use(cors());
 app.use(express.json());
 
