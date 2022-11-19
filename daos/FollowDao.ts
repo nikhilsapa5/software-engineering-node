@@ -45,9 +45,10 @@ export default class FollowDao implements FollowDaoI {
      * @returns Promise to be notified when the relationship is deleted.
      * @param fid the unique id of the follow instance that needs to be deleted
      */
-    userUnFollowsAnotherUser = async (fid: string): Promise<any> =>
+    userUnFollowsAnotherUser = async (uid: string, anotherUid: string): Promise<any> =>
         FollowModel.deleteOne({
-            _id:  fid
+            userFollowing:  uid,
+            userFollowed: anotherUid
         })
             .then(follows => follows)
             .catch(error => error);
