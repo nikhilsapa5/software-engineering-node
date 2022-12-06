@@ -13,7 +13,7 @@ import Stats from "./Stats";
  * @property {Date} postedOn the date on which the tuit was posted
  * @property {Date} postedOn the date on which the tuit was posted
  */
-export default interface Tuit {
+ export default interface Tuit {
     tuit: string,
     postedBy: User,
     postedOn?: Date,

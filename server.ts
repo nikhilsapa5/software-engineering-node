@@ -9,7 +9,7 @@
  *     <li>Message</li>
  *     <li>Follow</li>
  * </ul>
- *
+ * 
  * Connects to a remote MongoDB instance hosted on the Atlas cloud database
  * service
  */
@@ -32,38 +32,38 @@ const connectionString = `mongodb+srv://NehaRamachandra:1234@cluster0.zmme2.mong
 mongoose.connect(connectionString);
 
 mongoose.connection.on("error", function(error) {
-    console.log(error)
+  console.log(error)
 })
 
 mongoose.connection.on("open", function() {
-    console.log("Connected to MongoDB Database")
+  console.log("Connected to MongoDB Database")
 })
 
 const app = express();
 
 app.use(cors({
-    credentials: true,
-    origin: ["http://localhost:3000", 'https://splendorous-tulumba-3afd27.netlify.app/#/explore/']
+  credentials: true,
+  origin: ["http://localhost:3000", 'https://splendorous-tulumba-3afd27.netlify.app/#/explore/']
 
 }));
 const SECRET = 'process.env.SECRET';
 let sess = {
-    secret: SECRET,
-    saveUninitialized: true,
-    resave: true,
-    cookie: {
-        secure: false
-    }
+  secret: SECRET,
+  saveUninitialized: true,
+  resave: true,
+  cookie: {
+      secure: false
+  }
 }
 if (process.env.ENV === 'PRODUCTION') {
-    app.set('trust proxy', 1) // trust first proxy
-    sess.cookie.secure = true // serve secure cookies
+  app.set('trust proxy', 1) // trust first proxy
+  sess.cookie.secure = true // serve secure cookies
 }
 app.use(session(sess))
 app.use(express.json());
 
 app.get('/hello', (req, res) =>
-    res.send('Hello World!'));
+res.send('Hello World!'));
 
 app.get('/add/:a/:b', (req: Request, res: Response) =>
     res.send(req.params.a + req.params.b));
@@ -84,4 +84,3 @@ AuthenticationController(app);
  */
 const PORT = 4000;
 app.listen(process.env.PORT || PORT);
-//added dislikes
