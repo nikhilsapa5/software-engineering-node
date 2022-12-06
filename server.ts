@@ -43,7 +43,7 @@ const app = express();
 
 app.use(cors({
     credentials: true,
-    origin: ["http://localhost:3000", 'https://dulcet-kitsune-7fa4f2.netlify.app', 'https://super-gelato-e19dbd.netlify.app']
+    origin: ["http://localhost:3000", 'https://splendorous-tulumba-3afd27.netlify.app/#/explore/']
 
 }));
 const SECRET = 'process.env.SECRET';
