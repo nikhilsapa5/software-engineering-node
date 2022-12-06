@@ -42,7 +42,7 @@ const app = express();
 
 app.use(cors({
     credentials: true,
-    origin: ["http://localhost:3000", 'https://a3--courageous-hamster-d66df5.netlify.app/']
+    origin: ["http://localhost:3000", 'https://splendorous-tulumba-3afd27.netlify.app/#/explore/']
 
 }));
 const SECRET = 'process.env.SECRET';
