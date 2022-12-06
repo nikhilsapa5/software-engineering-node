@@ -23,5 +23,4 @@ const findAllTuits = async () =>
     await axios.get('/tuits');
 
 
-
 //url update

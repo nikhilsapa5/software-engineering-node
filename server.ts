@@ -43,7 +43,7 @@ const app = express();
 
 app.use(cors({
     credentials: true,
-    origin: ["http://localhost:3000", 'https://splendorous-tulumba-3afd27.netlify.app/#/explore/']
+    origin: ["http://localhost:3000", 'https://a3--courageous-hamster-d66df5.netlify.app', 'https://super-gelato-e19dbd.netlify.app']
 
 }));
 const SECRET = 'process.env.SECRET';
@@ -84,4 +84,4 @@ AuthenticationController(app);
  */
 const PORT = 4000;
 app.listen(process.env.PORT || PORT);
-//added dislikes
+//added dislike

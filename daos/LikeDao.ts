@@ -84,4 +84,4 @@ export default class LikeDao implements LikeDaoI {
         LikeModel.count({tuit: tid});
 }
 
-//bug fix
+//my-likes data access object

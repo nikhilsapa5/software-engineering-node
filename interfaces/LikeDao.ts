@@ -3,8 +3,6 @@ import Like from "../models/Like";
 /**
  * @file Declares API for Likes related data access object methods
  */
-
-//bug fix
 export default interface LikeDaoI {
     findAllUsersThatLikedTuit (tid: string): Promise<Like[]>;
     findAllTuitsLikedByUser (uid: string): Promise<Like[]>;
@@ -13,3 +11,5 @@ export default interface LikeDaoI {
     findUserLikesTuit (tid: string, uid: string): Promise<any>;
     countHowManyLikedTuit (tid: string): Promise<any>;
 };
+
+//interface added
