@@ -2,7 +2,7 @@
  * @file Controller RESTful Web service API for users resource
  */
 import UserDao from "../daos/UserDao";
-import User from "../models/users/User";
+import User from "../models/User";
 import {Express, Request, Response} from "express";
 import UserControllerI from "../interfaces/UserController";
 
@@ -34,6 +34,16 @@ export default class UserController implements UserControllerI {
         if(UserController.userController === null) {
             UserController.userController = new UserController();
 
+            // for testing without postman. Not RESTful
+            app.get("/api/users/create",
+                UserController.userController.createUser);
+            app.get("/api/users/:uid/delete",
+                UserController.userController.deleteUser);
+            app.get("/api/users/username/:username/delete",
+                UserController.userController.deleteUsersByUsername);
+            app.get("/api/users/delete",
+                UserController.userController.deleteAllUsers);
+
             // RESTful User Web service API
             app.get("/api/users",
                 UserController.userController.findAllUsers);
@@ -47,14 +57,8 @@ export default class UserController implements UserControllerI {
                 UserController.userController.deleteUser);
             app.delete("/api/users",
                 UserController.userController.deleteAllUsers);
-            // for testing. Not RESTful
-            app.get("/api/users/create",
-                UserController.userController.createUser);
-            app.get("/api/users/id/:uid/delete",
-                UserController.userController.deleteUser);
-            app.get("/api/users/delete",
-                UserController.userController.deleteAllUsers);
-            app.get("/api/users/username/:username/delete", UserController.userController.deleteUsersByUsername);
+            app.post("/api/login",
+                UserController.userController.login);
         }
         return UserController.userController;
     }
@@ -127,8 +131,35 @@ export default class UserController implements UserControllerI {
         UserController.userDao.deleteAllUsers()
             .then((status) => res.send(status));
 
+    /**
+     * Removes all user instances based on user name from the database. Useful for testing
+     * @param {Request} req Represents request from client
+     * @param {Response} res Represents response to client, including status
+     * on whether deleting all users was successful or not
+     */
     deleteUsersByUsername = (req: Request, res: Response) =>
         UserController.userDao.deleteUsersByUsername(req.params.username)
-            .then((status) => res.send(status))
+            .then(status => res.send(status));
 
+    /**
+     * Used to handle the login request from client.
+     * @param {Request} req Represents request from client
+     * @param {Response} res Represents response to client, including whether
+     * login was sucessfull or not.
+     */
+    login = (req: Request, res: Response) =>
+        UserController.userDao.findUserByCredentials(req.body.username, req.body.password)
+            .then(user => {res.json(user)
+            });
+
+    /**
+     * Used to register the user on the database
+     * @param {Request} req Represents request from client
+     * @param {Response} res Represents response to client, including whether
+     * if user was sucessfully registered or not.
+     */
+    register = (req: Request, res: Response) =>
+        UserController.userDao.findUserByUsername(req.body.username)
+            .then(user => {
+            });
 };
