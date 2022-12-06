@@ -5,4 +5,5 @@ export default interface Dislike {
     tuit: Tuit,
     dislikedBy: User
 };
-//middletier
+
+//model middletire for dislike

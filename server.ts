@@ -28,7 +28,7 @@ var cors = require('cors')
 const session = require("express-session");
 
 // connect to database
-const connectionString = `mongodb+srv://NehaRamachandra:1234@cluster0.zmme2.mongodb.net/tuiter?retryWrites=true&w=majority`;
+const connectionString = `mongodb+srv://meet:meet1234@cluster0.zntvi.mongodb.net/myFirstDatabase?retryWrites=true`;
 mongoose.connect(connectionString);
 
 mongoose.connection.on("error", function(error) {
@@ -43,7 +43,7 @@ const app = express();
 
 app.use(cors({
     credentials: true,
-    origin: ["http://localhost:3000", 'https://splendorous-tulumba-3afd27.netlify.app/#/explore/']
+    origin: ["http://localhost:3000", 'https://dulcet-kitsune-7fa4f2.netlify.app', 'https://super-gelato-e19dbd.netlify.app']
 
 }));
 const SECRET = 'process.env.SECRET';
@@ -84,4 +84,4 @@ AuthenticationController(app);
  */
 const PORT = 4000;
 app.listen(process.env.PORT || PORT);
-//added dislike
+//added dislikes
